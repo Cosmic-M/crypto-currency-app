@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 public class CryptoMapper {
     public CryptoResponseDto toDto(Crypto crypto) {
         CryptoResponseDto responseDto = new CryptoResponseDto();
+        responseDto.setId(crypto.getId());
         responseDto.setTime(crypto.getTime());
         responseDto.setAsset_id_quote(crypto.getAssetIdQuote());
         responseDto.setRate(crypto.getRate());

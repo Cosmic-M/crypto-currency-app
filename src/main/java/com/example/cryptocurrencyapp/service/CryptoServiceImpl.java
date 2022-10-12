@@ -7,13 +7,14 @@ import com.example.cryptocurrencyapp.repository.CryptoRepository;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import javax.annotation.PostConstruct;
 import java.time.LocalDateTime;
 import java.util.*;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Log4j2
@@ -30,12 +31,12 @@ public class CryptoServiceImpl implements CryptoService {
     private String key;
 
     @Override
-    public List<Crypto> getAll() {
-        return cryptoRepository.findAll();
+    public Page<Crypto> getAll(PageRequest pageRequest) {
+        return cryptoRepository.findAll(pageRequest);
     }
 
     @Override
-    @PostConstruct
+    //@PostConstruct
     @Scheduled(cron = "0 30 8 * * ?", zone = "Europe/Kiev")
     public void refreshCryptoList() {
         log.info("syncExternalCharacters was called at " + LocalDateTime.now());
@@ -46,9 +47,5 @@ public class CryptoServiceImpl implements CryptoService {
                 .map(cryptoMapper::toModel)
                 .collect(Collectors.toList());
         cryptoRepository.saveAll(cryptoList);
-    }
-
-    List<Crypto> getListToSave(ApiResponseDto responseDto) {
-        return null;
     }
 }
