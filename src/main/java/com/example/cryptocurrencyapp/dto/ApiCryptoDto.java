@@ -18,5 +18,5 @@ public class ApiCryptoDto implements Serializable {
     @JsonSerialize(using = LocalDateTimeSerializer.class)
     private LocalDateTime time;
     private String asset_id_quote;
-    private BigDecimal rate;
+    private String rate;
 }

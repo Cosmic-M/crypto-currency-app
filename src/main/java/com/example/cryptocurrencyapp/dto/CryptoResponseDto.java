@@ -11,5 +11,5 @@ import java.time.LocalDateTime;
 public class CryptoResponseDto {
     private LocalDateTime time;
     private String asset_id_quote;
-    private BigDecimal rate;
+    private String rate;
 }

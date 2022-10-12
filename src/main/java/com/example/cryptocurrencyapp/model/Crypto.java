@@ -13,9 +13,8 @@ import java.time.LocalDateTime;
 @Table(name = "crypto_currencies")
 public class Crypto {
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
-    private LocalDateTime time;
+    @Column(name = "asset_id_quote", nullable = false)
     private String assetIdQuote;
-    private BigDecimal rate;
+    private LocalDateTime time;
+    private String rate;
 }
