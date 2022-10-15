@@ -2,6 +2,7 @@ package com.example.cryptocurrencyapp.service;
 
 import com.example.cryptocurrencyapp.dto.ApiMessageDto;
 import com.example.cryptocurrencyapp.model.ApiMessage;
+import com.example.cryptocurrencyapp.service.maper.MessageMapper;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;

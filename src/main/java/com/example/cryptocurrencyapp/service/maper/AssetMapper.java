@@ -1,4 +1,4 @@
-package com.example.cryptocurrencyapp.service;
+package com.example.cryptocurrencyapp.service.maper;
 
 import com.example.cryptocurrencyapp.dto.ApiAssetDto;
 import com.example.cryptocurrencyapp.dto.AssetResponseDto;

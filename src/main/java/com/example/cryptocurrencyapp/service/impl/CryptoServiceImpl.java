@@ -1,8 +1,11 @@
-package com.example.cryptocurrencyapp.service;
+package com.example.cryptocurrencyapp.service.impl;
 
 import com.example.cryptocurrencyapp.dto.ApiAssetDto;
 import com.example.cryptocurrencyapp.model.Asset;
 import com.example.cryptocurrencyapp.repository.AssetRepository;
+import com.example.cryptocurrencyapp.service.CryptoService;
+import com.example.cryptocurrencyapp.service.ResponseParser;
+import com.example.cryptocurrencyapp.service.maper.AssetMapper;
 import com.squareup.okhttp.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
@@ -11,6 +14,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
+
 import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.util.Arrays;

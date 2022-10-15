@@ -28,7 +28,7 @@ public class ResponseParserImpl implements ResponseParser {
             }
             return objectMapper.readValue(builder.toString(), clazz);
         } catch (IOException exc) {
-            throw new RuntimeException("Cannot obtain stream from response object");
+            throw new RuntimeException("Cannot map to Api[Object]Dto" + exc);
         }
     }
 }
