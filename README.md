@@ -1,10 +1,13 @@
-# Rick and Morty
+# Crypto Currency APP
 
 <h3>To launch app:</h3>
-- pull this file<br>
-- start docker on your local machine<br>
-- open terminal and start command: docker-compose up<br>
-- open browser and write: http://localhost:6868/swagger-ui/#/<br>
+- pull this file <br>
+- follow the link https://www.coinapi.io and get free API_KEY
+- open application.properties and put your free key
+- start docker on your local machine <br>
+- open terminal and run mvn clean package <br>
+- open terminal and start command: docker-compose up <br>
+- open browser and follow: http://localhost:6868/swagger-ui/#/ <br>
 - everything prepared to working<br>
 
 <h3>Project description:</h3>
@@ -25,8 +28,9 @@ I just return specific message for this crypto.
 
 <h3>In this APP were used such technologies like:</h3>
 - org.apache.maven, version 4.0.0<br>
-- java, version 17<br>
-- org.hibernate<br>
-- spring boot<br>
-- liquibase<br>
-- websockets<br>
+- java, version 17 <br>
+- org.hibernate <br>
+- spring boot <br>
+- websockets <br>
+- liquibase <br>
+- swagger <br>

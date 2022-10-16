@@ -13,7 +13,6 @@ import javax.websocket.WebSocketContainer;
 
 @ClientEndpoint
 public class WebsocketClientEndpoint {
-
     private Session userSession = null;
     private MessageHandler messageHandler;
 

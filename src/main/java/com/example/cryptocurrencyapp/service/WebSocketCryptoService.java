@@ -12,10 +12,12 @@ import org.springframework.stereotype.Service;
 @RequiredArgsConstructor
 public class WebSocketCryptoService {
     private final MessageHandlerImpl messageHandler;
+    private WebsocketClientEndpoint clientEndPoint;
     @Value(value = "${priceWebSocketApiLink}")
     private String link;
     @Value(value = "${API_KEY}")
     private String key;
+    private boolean isOpen = false;
 
     public void sendRequest(List<String> cryptoGroup) {
         StringBuilder builder = new StringBuilder();
@@ -43,15 +45,17 @@ public class WebSocketCryptoService {
                 + builder
                 + "]}";
         try {
-            final WebsocketClientEndpoint clientEndPoint =
-                    new WebsocketClientEndpoint(new URI(link));
+            if (!isOpen) {
+                clientEndPoint = new WebsocketClientEndpoint(new URI(link));
+                isOpen = true;
+            }
             clientEndPoint.addMessageHandler(messageHandler::handleMessage);
             clientEndPoint.sendMessage(json);
             Thread.sleep(3500);
         } catch (InterruptedException ex) {
             throw new RuntimeException("InterruptedException exception: " + ex.getMessage());
-        } catch (URISyntaxException ex) {
-            throw new RuntimeException("URISyntaxException exception: " + ex.getMessage());
+        } catch (URISyntaxException e) {
+            throw new RuntimeException("URISyntaxException exception: " + e);
         }
     }
 }
