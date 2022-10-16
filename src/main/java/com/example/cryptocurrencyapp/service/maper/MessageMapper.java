@@ -11,8 +11,8 @@ public class MessageMapper {
 
     public ApiMessage toModel(ApiMessageDto apiMessageDto) {
         ApiMessage apiMessage = new ApiMessage();
-        apiMessage.setSymbolId(apiMessageDto.getSymbol_id());
-        apiMessage.setTimeExchange(apiMessageDto.getTime_exchange());
+        apiMessage.setSymbolId(apiMessageDto.getSymbolId());
+        apiMessage.setTimeExchange(apiMessageDto.getTimeExchange());
         apiMessage.setPrice(apiMessageDto.getPrice());
         return apiMessage;
     }

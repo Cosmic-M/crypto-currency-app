@@ -20,7 +20,6 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-
 @Service
 @EnableScheduling
 @RequiredArgsConstructor
@@ -52,7 +51,7 @@ public class CryptoServiceImpl implements CryptoService {
             Response response = client.newCall(request).execute();
             ApiAssetDto[] apiAssetDtos = responseParser.parse(response, ApiAssetDto[].class);
             List<Asset> assets = Arrays.stream(apiAssetDtos)
-                    .filter(crypto -> crypto.getType_is_crypto() == 1)
+                    .filter(crypto -> crypto.getCryptoType() == 1)
                     .map(assetMapper::toModel)
                     .toList();
             assetRepository.saveAll(assets);

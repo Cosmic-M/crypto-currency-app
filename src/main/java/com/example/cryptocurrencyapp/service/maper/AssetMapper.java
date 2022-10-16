@@ -9,7 +9,7 @@ import org.springframework.stereotype.Component;
 public class AssetMapper {
     public Asset toModel(ApiAssetDto apiAssetDto) {
         Asset asset = new Asset();
-        asset.setAssetId(apiAssetDto.getAsset_id());
+        asset.setAssetId(apiAssetDto.getAssetId());
         asset.setTitle(apiAssetDto.getName());
         return asset;
     }

@@ -43,7 +43,8 @@ public class WebSocketCryptoService {
                 + builder
                 + "]}";
         try {
-            final WebsocketClientEndpoint clientEndPoint = new WebsocketClientEndpoint(new URI(link));
+            final WebsocketClientEndpoint clientEndPoint =
+                    new WebsocketClientEndpoint(new URI(link));
             clientEndPoint.addMessageHandler(messageHandler::handleMessage);
             clientEndPoint.sendMessage(json);
             Thread.sleep(3500);

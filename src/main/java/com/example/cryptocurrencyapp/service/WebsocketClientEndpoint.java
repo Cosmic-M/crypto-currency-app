@@ -14,13 +14,13 @@ import javax.websocket.WebSocketContainer;
 @ClientEndpoint
 public class WebsocketClientEndpoint {
 
-    Session userSession = null;
+    private Session userSession = null;
     private MessageHandler messageHandler;
 
-    public WebsocketClientEndpoint(URI endpointURI) {
+    public WebsocketClientEndpoint(URI endpointUri) {
         try {
             WebSocketContainer container = ContainerProvider.getWebSocketContainer();
-            container.connectToServer(this, endpointURI);
+            container.connectToServer(this, endpointUri);
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
@@ -45,8 +45,8 @@ public class WebsocketClientEndpoint {
         }
     }
 
-   @OnMessage
-   public void onMessage(ByteBuffer bytes) {
+    @OnMessage
+    public void onMessage(ByteBuffer bytes) {
         System.out.println("Handle byte buffer");
     }
 

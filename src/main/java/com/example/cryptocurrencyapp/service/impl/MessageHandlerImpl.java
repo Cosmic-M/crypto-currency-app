@@ -13,16 +13,15 @@ import org.springframework.stereotype.Component;
 
 @Component
 @RequiredArgsConstructor
-public class MessageHandlerImpl  {
+public class MessageHandlerImpl {
     private final MessageMapper messageMapper;
     private final ObjectMapper objectMapper = new ObjectMapper();
+    private final Queue<ApiMessage> currentDataQueue = new CircularFifoQueue<>(100);
     private boolean valve = true;
 
     {
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     }
-    private final Queue<ApiMessage> currentDataQueue = new CircularFifoQueue<>(100);
-
 
     public void handleMessage(String message) {
         try {

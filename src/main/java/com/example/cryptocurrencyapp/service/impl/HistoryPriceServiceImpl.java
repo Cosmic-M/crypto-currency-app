@@ -6,12 +6,12 @@ import com.example.cryptocurrencyapp.service.ResponseParser;
 import com.squareup.okhttp.OkHttpClient;
 import com.squareup.okhttp.Request;
 import com.squareup.okhttp.Response;
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
@@ -50,7 +50,8 @@ public class HistoryPriceServiceImpl implements HistoryPriceService {
                 .build();
         try {
             Response response = client.newCall(request).execute();
-            ApiHistoryPriceDto[] apiHistoryPriceDtos = responseParser.parse(response, ApiHistoryPriceDto[].class);
+            ApiHistoryPriceDto[] apiHistoryPriceDtos = responseParser
+                    .parse(response, ApiHistoryPriceDto[].class);
             return Arrays.stream(apiHistoryPriceDtos).toList();
         } catch (IOException e) {
             throw new RuntimeException(e);
