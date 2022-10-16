@@ -3,7 +3,9 @@ package com.example.cryptocurrencyapp.service.impl;
 import com.example.cryptocurrencyapp.dto.ApiHistoryPriceDto;
 import com.example.cryptocurrencyapp.service.HistoryPriceService;
 import com.example.cryptocurrencyapp.service.ResponseParser;
-import com.squareup.okhttp.*;
+import com.squareup.okhttp.OkHttpClient;
+import com.squareup.okhttp.Request;
+import com.squareup.okhttp.Response;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -22,8 +24,6 @@ public class HistoryPriceServiceImpl implements HistoryPriceService {
 
     @Override
     public List<ApiHistoryPriceDto> getHistoryPrice(String cryptoName, String date) {
-//        MediaType mediaType = MediaType.parse("application/json");
-//        RequestBody body = RequestBody.create(mediaType, "{\n\t\n}");
         StringBuilder builder = new StringBuilder();
         builder.append(link)
                 .append("/")
@@ -48,7 +48,6 @@ public class HistoryPriceServiceImpl implements HistoryPriceService {
                 .url(builder.toString())
                 .addHeader("X-CoinAPI-Key", key)
                 .build();
-
         try {
             Response response = client.newCall(request).execute();
             ApiHistoryPriceDto[] apiHistoryPriceDtos = responseParser.parse(response, ApiHistoryPriceDto[].class);

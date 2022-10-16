@@ -1,12 +1,12 @@
-package com.example.cryptocurrencyapp.service;
+package com.example.cryptocurrencyapp.service.impl;
 
+import com.example.cryptocurrencyapp.service.ResponseParser;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.squareup.okhttp.Response;
-import org.springframework.stereotype.Component;
-
 import java.io.IOException;
 import java.io.InputStream;
+import org.springframework.stereotype.Component;
 
 @Component
 public class ResponseParserImpl implements ResponseParser {

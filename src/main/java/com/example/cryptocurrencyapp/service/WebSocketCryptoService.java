@@ -1,11 +1,12 @@
 package com.example.cryptocurrencyapp.service;
 
-import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.stereotype.Service;
+import com.example.cryptocurrencyapp.service.impl.MessageHandlerImpl;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Service;
 
 @Service
 @RequiredArgsConstructor
@@ -16,7 +17,7 @@ public class WebSocketCryptoService {
     @Value(value = "${API_KEY}")
     private String key;
 
-    public WebsocketClientEndpoint sendRequest(List<String> cryptoGroup) {
+    public void sendRequest(List<String> cryptoGroup) {
         StringBuilder builder = new StringBuilder();
         boolean firstLine = true;
         for (String crypto : cryptoGroup) {
@@ -45,8 +46,7 @@ public class WebSocketCryptoService {
             final WebsocketClientEndpoint clientEndPoint = new WebsocketClientEndpoint(new URI(link));
             clientEndPoint.addMessageHandler(messageHandler::handleMessage);
             clientEndPoint.sendMessage(json);
-            Thread.sleep(2000);
-            return clientEndPoint;
+            Thread.sleep(3500);
         } catch (InterruptedException ex) {
             throw new RuntimeException("InterruptedException exception: " + ex.getMessage());
         } catch (URISyntaxException ex) {
