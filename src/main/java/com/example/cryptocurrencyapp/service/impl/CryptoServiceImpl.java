@@ -12,6 +12,7 @@ import com.squareup.okhttp.Response;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
@@ -39,7 +40,7 @@ public class CryptoServiceImpl implements CryptoService {
     }
 
     @Override
-    //@PostConstruct
+    @PostConstruct
     @Scheduled(cron = "0 30 8 * * ?", zone = "Europe/Kiev")
     public void getAssetsFromApi() {
         OkHttpClient client = new OkHttpClient();

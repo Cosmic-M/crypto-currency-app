@@ -6,7 +6,7 @@
 - open application.properties and put your free key
 - start docker on your local machine <br>
 - open terminal and run mvn clean package <br>
-- open terminal and start command: docker-compose up <br>
+- after that start command: docker-compose up <br>
 - open browser and follow: http://localhost:6868/swagger-ui/#/ <br>
 - everything prepared to working<br>
 
@@ -34,3 +34,4 @@ I just return specific message for this crypto.
 - websockets <br>
 - liquibase <br>
 - swagger <br>
+- docker <br>
