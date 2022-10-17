@@ -6,9 +6,7 @@ import com.example.cryptocurrencyapp.service.MessageServiceComposer;
 import com.example.cryptocurrencyapp.service.maper.MessageMapper;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
-import java.util.Queue;
-import java.util.stream.Collectors;
+import java.util.Map;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -25,19 +23,11 @@ public class MessageServiceComposerImpl implements MessageServiceComposer {
         for (String crypto : cryptoGroup) {
             symbolIds.add("COINBASE_SPOT_" + crypto + "_USD");
         }
-        Queue<ApiMessage> queueMessages = messageHandler.getCurrentQueue();
-        if (queueMessages.isEmpty()) {
-            return symbolIds.stream()
-                    .map(messageMapper::toBlankDto)
-                    .collect(Collectors.toList());
-        }
+        Map<String, ApiMessage> messageMap = messageHandler.getMessageMap();
         for (String key : symbolIds) {
-            Optional<ApiMessage> apiMessage = queueMessages.stream()
-                    .filter(element -> element.getSymbolId() != null)
-                    .filter(element -> element.getSymbolId().equals(key))
-                    .findFirst();
-            if (apiMessage.isPresent()) {
-                result.add(messageMapper.toDto(apiMessage.get()));
+            ApiMessage apiMessage = messageMap.get(key);
+            if (apiMessage != null) {
+                result.add(messageMapper.toDto(apiMessage));
             } else {
                 result.add(messageMapper.toBlankDto(key));
             }

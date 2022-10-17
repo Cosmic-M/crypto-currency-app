@@ -5,7 +5,6 @@ import com.example.cryptocurrencyapp.dto.MessageResponseDto;
 import com.example.cryptocurrencyapp.service.HistoryPriceService;
 import com.example.cryptocurrencyapp.service.MessageServiceComposer;
 import com.example.cryptocurrencyapp.service.WebSocketCryptoService;
-import com.example.cryptocurrencyapp.service.impl.MessageHandlerImpl;
 import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
 import java.util.List;
@@ -22,18 +21,13 @@ public class PriceController {
     private final HistoryPriceService historyPriceService;
     private final WebSocketCryptoService webSocketCryptoService;
     private final MessageServiceComposer messageServiceComposer;
-    private final MessageHandlerImpl messageHandler;
 
     @GetMapping("/current")
     @ApiOperation(value = "get current price to specific crypto")
     public List<MessageResponseDto> getCurrentPrice(@RequestParam List<String> cryptoGroup) {
-        messageHandler.clearQueue();
-        messageHandler.makeValveOpen();
         webSocketCryptoService.sendRequest(cryptoGroup);
         try {
-            Thread.sleep(2500);
-            messageHandler.makeValveClose();
-            Thread.sleep(200);
+            Thread.sleep(3500);
         } catch (InterruptedException e) {
             throw new RuntimeException("Method sleep threw exception. " + e);
         }

@@ -51,9 +51,6 @@ public class WebSocketCryptoService {
             }
             clientEndPoint.addMessageHandler(messageHandler::handleMessage);
             clientEndPoint.sendMessage(json);
-            Thread.sleep(3500);
-        } catch (InterruptedException ex) {
-            throw new RuntimeException("InterruptedException exception: " + ex.getMessage());
         } catch (URISyntaxException e) {
             throw new RuntimeException("URISyntaxException exception: " + e);
         }

@@ -4,8 +4,8 @@ import com.example.cryptocurrencyapp.dto.MessageResponseDto;
 import com.example.cryptocurrencyapp.model.ApiMessage;
 import io.restassured.module.mockmvc.RestAssuredMockMvc;
 import java.util.List;
-import java.util.Queue;
-import liquibase.repackaged.org.apache.commons.collections4.queue.CircularFifoQueue;
+import java.util.Map;
+import java.util.concurrent.ConcurrentHashMap;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -32,7 +32,7 @@ class MessageServiceComposerImplTest {
     private MockMvc mockMvc;
     @MockBean
     private MessageHandlerImpl messageHandler;
-    private Queue<ApiMessage> queueMessages;
+    private Map<String, ApiMessage> mapMessages;
     private List<String> symbols;
     private MessageResponseDto firstDto;
     private MessageResponseDto secondDto;
@@ -42,7 +42,7 @@ class MessageServiceComposerImplTest {
     @BeforeEach
     void setUp() {
         RestAssuredMockMvc.mockMvc(mockMvc);
-        queueMessages = new CircularFifoQueue<>(100);
+        mapMessages = new ConcurrentHashMap<>();
 
         ApiMessage firstMessage = new ApiMessage();
         firstMessage.setPrice("123,45");
@@ -54,8 +54,8 @@ class MessageServiceComposerImplTest {
         secondMessage.setSymbolId("COINBASE_SPOT_ETH_USD");
         secondMessage.setTimeExchange("2022-10-17");
 
-        queueMessages.add(firstMessage);
-        queueMessages.add(secondMessage);
+        mapMessages.put(firstMessage.getSymbolId(), firstMessage);
+        mapMessages.put(secondMessage.getSymbolId(), secondMessage);
 
         String btcSymbolId = "BTC";
         String ethSymbolId = "ETH";
@@ -84,7 +84,7 @@ class MessageServiceComposerImplTest {
 
     @Test
     void composeResponse_allDataAvailable_ok() {
-        Mockito.when(messageHandler.getCurrentQueue()).thenReturn(queueMessages);
+        Mockito.when(messageHandler.getMessageMap()).thenReturn(mapMessages);
         List<MessageResponseDto> resultMessages = messageServiceComposer.composeResponse(symbols);
 
         Assertions.assertEquals(firstDto.getSymbolId(), resultMessages.get(0).getSymbolId());
@@ -100,8 +100,8 @@ class MessageServiceComposerImplTest {
 
     @Test
     void composeResponse_oneBlankMessage_ok() {
-        queueMessages.remove();
-        Mockito.when(messageHandler.getCurrentQueue()).thenReturn(queueMessages);
+        mapMessages.remove("COINBASE_SPOT_BTC_USD");
+        Mockito.when(messageHandler.getMessageMap()).thenReturn(mapMessages);
         List<MessageResponseDto> resultMessages = messageServiceComposer.composeResponse(symbols);
 
         Assertions.assertEquals(btcBlankDto.getSymbolId(), resultMessages.get(0).getSymbolId());
@@ -117,9 +117,9 @@ class MessageServiceComposerImplTest {
 
     @Test
     void composeResponse_queueIsEmpty_ok() {
-        queueMessages.remove();
-        queueMessages.remove();
-        Mockito.when(messageHandler.getCurrentQueue()).thenReturn(queueMessages);
+        mapMessages.remove("COINBASE_SPOT_BTC_USD");
+        mapMessages.remove("COINBASE_SPOT_ETH_USD");
+        Mockito.when(messageHandler.getMessageMap()).thenReturn(mapMessages);
         List<MessageResponseDto> resultMessages = messageServiceComposer.composeResponse(symbols);
 
         Assertions.assertEquals(btcBlankDto.getSymbolId(), resultMessages.get(0).getSymbolId());
